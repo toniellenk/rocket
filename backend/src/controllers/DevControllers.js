@@ -49,7 +49,6 @@ module.exports = {
                 location
             });
 
-            console.log(name, avatar_url, bio, github_username, techs);
         }
         else {
             dev = await Dev.updateOne(
