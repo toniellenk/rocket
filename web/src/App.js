@@ -1,19 +1,47 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import api from './services/api';
 
+import DevForm from './components/devForm'
+import DevItem from './components/devItem'
+
+import './global.css';
+import './app.css';
+import './sideBar.css';
+import './main.css';
 
 function App() {
 
-  let [counter, setCounter] = useState(0);
+  const [devs, setDevs] = useState([]);
 
-  function countIncrement() {
-    setCounter(counter + 1);
-  };
+  useEffect(() => {
+    async function loadDevs() {
+      const respose = await api.get('/devs');
+      setDevs(respose.data);
+    };
+
+    loadDevs();
+  }, []);
+
+  async function handleAddDev(data) {
+
+    const reponse = await api.post('/devs', data);
+    setDevs([...devs, reponse.data]);
+  }
 
   return (
-    <>
-      <h1>Contador: {counter}</h1>
-      <button onClick={countIncrement}>Incrementar</button>
-    </>
+    <div id='app'>
+      <aside>
+        <strong>Cadastrar</strong>
+        <DevForm onSubmit={handleAddDev}></DevForm>
+      </aside>
+      <main>
+        <ul>
+          {devs.map(dev => (
+            <DevItem key={dev._id} dev={dev}></DevItem>
+          ))}
+        </ul>
+      </main>
+    </div>
   );
 }
 
