@@ -29,10 +29,12 @@ function DevForm({ onSubmit }) {
         e.preventDefault();
 
         await onSubmit(
-            github_username,
-            techs,
-            latitude,
-            longitude
+            {
+                github_username,
+                techs,
+                latitude,
+                longitude
+            }
         );
 
         setGithub_username('');

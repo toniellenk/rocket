@@ -54,7 +54,6 @@ module.exports = {
             dev = await Dev.updateOne(
                 { github_username },
                 {
-                    name,
                     bio,
                     techs: techsArray,
                     location
